@@ -1,0 +1,134 @@
+========================================================================================================================
+=																													   =
+=				  					Project - Temperature Controlled PWM Fans										   =
+=																													   =
+========================================================================================================================
+
+* Author:	Weilhartner Stefan
+* Email: 	funkmaster.whylee@gmail.com
+* Created:	29.08.2023
+
+------------------------------------------------------------------------------------------------------------------------
+
+	This project is open source! You can do with it what you want as long as you refer to
+	the original Author (Weilhartner Stefan)
+	
+													PLEASE DONATE !!!
+
+* Proposal for donation:
+  Of course a donation is not necessary and purely optional / up to you.
+  But if you find this project valuable and it supports you in any way or you want to support me:
+  Please donate something. Ask yourself how much you want to donate for this project, how much is it worth for you,
+  how much you want to give back or how much you want to sponsor this project in any way, if you just like it.
+  I don't have any donation page yet, but if you write an email to me with the subject
+  "Donation - Commotari - Project Temperature Controlled PWM Fan", i try to respond.
+  Maybe you also have an idea what kind of sponsorship system/webpage you would suggest
+  (maybe patreon etc. which i did not have the time to look into yet)
+
+* Additional needs:
+  If you need additional functions that do not take too much time to implement you can try to contact me about it.
+  If it is a function that many people could need, then I might think about it and if I have to much time on my hand
+  (which is not very likely), then I might do that for free.
+  If you need an extention/change/function for your individual needs, that might be possible, if you already have
+  donated an appropriate amount or if you want to make a contract (of course this depends on my motivation and spare
+  time, which is not much because i already have a full time job which i am happy with).
+
+------------------------------------------------------------------------------------------------------------------------
+* Project goal:
+
+- should control a number of fans depending on the temperature
+- should be easy to solder for everyone
+  (maybe two versions, one version with DIP chips, easy to solder and one highly integrated version with smd components)
+- external 12V supply
+
+------------------------------------------------------------------------------------------------------------------------
+* Proposed software implementation steps and functionalities:
+
+- V0.1: switch on three PWMs with 25kHz and 50% duty cycle
+
+- V0.2: serial interface together with the serial-usb converter chip
+
+- V0.3: bootup PWM duty cycle configurable by command line over serial interface and eeprom configuration
+
+- V0.4: read out temperature sensors (internal, analog, i2C)
+
+- V0.5: configure temperature sensors with PWM formula
+
+- V0.6: I2C RTC read/write, set clock/date at command line terminal
+
+- V ???: rpm detection of fans, configuration of fans (not connected, on/off, pwm), fault detection if rpm too low
+- V ???: flash programmable memory functions, either internal flash or external SPI or I2C 
+- V ???: statistics regarding temperature recording, boot up time, brown out time in EEPROM?
+- V ???: brown out detection 11V power supply level detection, switch off fans below 11V, Capacitor to write last power down time
+- V ???: log which saves power on time, brown out time, pwm faults
+
+
+========================================================================================================================
+
+* 3 PWM controlled fans
+* 3 rpm inputs
+* 3 PWM outputs
+* 1-2 temperature inputs
+* serial debug interface
+* programming interface
+
+========================================================================================================================
+
+
+1. Microcontroller:
+
+	The selected Microcontroller that seems to be a good fit is the PIC18F16Q41 from Microchip
+	Features:
+	* DIP package available (PIC18F16Q41-I/P, 2,49€ at reichelt.de)
+	* programmable with microchip tools or cheap alternatives
+	* 5V compatible
+	* fast enough
+	* enough PWM outputs
+	* enough flash, could be used for a section with log-files as well (???)
+	* 
+	
+1.a PIC18F16Q41-I/P
+	
+	
+2. Fan(s)
+
+	Software configuration: Low when off, Duty Cycle from 1% to 100%, or 20% to 100%
+	defends on the fan.
+
+2.1. 4-wire Fans:
+	
+	Cheap Fan from Pollin:
+	https://www.pollin.at/p/lc-power-cpu-luefter-lc-cf-80-80-mm-4-pin-pwm-704006	
+	
+2.2. Connector - 
+	MOLEX 22232041 Molex Stiftleiste - KK - 1x4-polig - Stecker
+	MOLEX 6373-A4A-102/2223-2041
+	
+2.3. Connector - 4-Wire Pinout	
+	http://www.pavouk.org/hw/fan/en_fan4wire.html
+	1 - Black	GND
+	2 - Yellow	12V
+	3 - Green	Sense(tach)
+	4 - Blue	Control (PWM)
+
+2.4. Controlling:
+	* PWM frequency: 25kHz (21kHz ... 28kHz allowed)
+	* 100% high means Duty cycle 100% ==> pull-up 47k to TTL 5V high
+	
+	http://www.formfactors.org/developer/specs/4_Wire_PWM_Spec.pdf 4-Wire connection specification.
+	
+3. USB-Interface:
+	* serial to USB converter MCP 2221-I/P  (DIP-14 case)	==> Reichelt 3.20€
+	*
+	
+4. PCB
+	* the PCB should be designed with KiCAD
+	* It should have a QRCODE or something similar on the PCB to point to the github page to get
+	  all the documentation needed (if someone sees this and doesn't know what it is or what it does)
+	  
+	* theoretically there could be different versions: one with DIP packages and through hole components
+	  and (maybe!!) later on a more integrated smaller version with SMD components on it.
+	  
+	  
+	
+
