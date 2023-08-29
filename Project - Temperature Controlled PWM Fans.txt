@@ -100,11 +100,10 @@
 	Cheap Fan from Pollin:
 	https://www.pollin.at/p/lc-power-cpu-luefter-lc-cf-80-80-mm-4-pin-pwm-704006	
 	
-2.2. Connector - 
-	MOLEX 22232041 Molex Stiftleiste - KK - 1x4-polig - Stecker
-	MOLEX 6373-A4A-102/2223-2041
+2.2. Fan Connectors - 
+	MOLEX 22272041 Molex pin header - KK - 1x4	==> 0,35€ at reichelt.at
 	
-2.3. Connector - 4-Wire Pinout	
+2.3. Fan Connectors - Connector - 4-Wire Pinout	
 	http://www.pavouk.org/hw/fan/en_fan4wire.html
 	1 - Black	GND
 	2 - Yellow	12V
@@ -119,7 +118,26 @@
 	
 3. USB-Interface:
 	* serial to USB converter MCP 2221-I/P  (DIP-14 case)	==> Reichelt 3.20€
-	*
+	* Connector: USB 31 C from Fisher Elektronik (Reichelt.de ==> 4,5€
+
+4. DC Connector:
+	* PCB mounted Barrel Jack 5.5mm * 2.1mm for 12V
+	CLIFF FCR681465P Built-in coupling Solder pins
+	
+	
+5. Temperature Sensor:
+	* Analog LM35
+	10mV per degree celcius.
+	==> 25°C  ==> 0,25V
+	==> 50°C  ==> 0,50V
+	==> 150°C ==> 1,50V
+	Example code can be found here:
+	https://circuitdigest.com/microcontroller-projects/digital-thermometer-using-pic16f877a-lm35-temperature-sensor
+	
+	Three sensors. one on the pcb, two connected with a 3-pin molex KK connectors ???
+	
+	==> alternative: LM 75 SMD via I2C bus.
+	
 	
 4. PCB
 	* the PCB should be designed with KiCAD
