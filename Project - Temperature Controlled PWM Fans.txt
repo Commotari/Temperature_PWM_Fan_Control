@@ -44,6 +44,14 @@
 ------------------------------------------------------------------------------------------------------------------------
 * Proposed software implementation steps and functionalities:
 
+- V0.05: solder a small pcb that only contains a 'passive' version for a quick fix:
+		* the power supply barrel connector for the 12V power supply
+		* add the electrolytic caps, ceramic cap and voltage regulator and again a ceramic cap and elektrolytic cap.
+		* and 3 molex KK fan connectors with spaces and soldering possibilities to add all other chips later (mcu, rtc, temp),...
+		* connect the PWM pins from the fan connectors to high (5V ????) at first.
+		==> ready to use at 100% without any controlling as a quick fix.
+		 
+
 - V0.1: switch on three PWMs with 25kHz and 50% duty cycle
 
 - V0.2: serial interface together with the serial-usb converter chip
@@ -126,20 +134,67 @@
 	
 	
 5. Temperature Sensor:
-	* Analog LM35
-	10mV per degree celcius.
-	==> 25°C  ==> 0,25V
-	==> 50°C  ==> 0,50V
-	==> 150°C ==> 1,50V
-	Example code can be found here:
-	https://circuitdigest.com/microcontroller-projects/digital-thermometer-using-pic16f877a-lm35-temperature-sensor
+	5.1. Analog LM35
+		10mV per degree celcius.
+		==> 25°C  ==> 0,25V
+		==> 50°C  ==> 0,50V
+		==> 150°C ==> 1,50V
+		Example code can be found here:
+		https://circuitdigest.com/microcontroller-projects/digital-thermometer-using-pic16f877a-lm35-temperature-sensor
+		Three sensors. one on the pcb, two connected with a 3-pin molex KK connectors ???
 	
-	Three sensors. one on the pcb, two connected with a 3-pin molex KK connectors ???
+	5.2. Digital - LM75
+		* LM75 is cheaper than LM35 (Reichelt 1,80€ vs. 2,35@), availability is better
+		* LM75 SMD communicates via I2C bus
+		* MOLEX 22057045 Molex pin header, 90° — SPOX — 1x4-pin — connector
+		* MOLEX 50375043 Molex crimp housing — SPOX — 1x4-pin — socket
+		* Pinout:
+			color coding from DIN47100
+			1 - GND		-  white
+			2 - 5V		-  brown
+			3 - SDA		-  green
+			4 - SDL		-  yellow
+
+	5.3. Digital - Microchip MCP9808
+		* MCP9808 is one of the cheapest digital sensors (Reichelt 1,75€ vs. 2,35@)
+		* very good accuracy (typical +-0.25°C)
+		* communicates via I2C bus
+		* MOLEX 22057045 Molex pin header, 90° — SPOX — 1x4-pin — connector
+		* MOLEX 50375043 Molex crimp housing — SPOX — 1x4-pin — socket
+		* Pinout:
+			1 - GND
+			2 - 5V
+			3 - SDA
+			4 - SDL
+			
+6. Real time clock:
+	* MCP7940N
+	* communication via I2C
+	* crystal: IQD LFXTAL014219 Quartz, 32.768 kHz, 6pF ==> Reichelt: 0,31€
 	
-	==> alternative: LM 75 SMD via I2C bus.
+
+7. Voltage regulator from 12V to 5V
+	7.1. MCP16331
 	
+8. I2C Communication
+	* We will try the 100kHz communication with 15kOhm pullup resistors on the SCL and SCA pin next to the
+	  temperature sensor on the main board. on every additional external board with a temperature sensor,
+	  we add another 15kOhm pull up resistor to SCA and SCL and at least one 100nF capacitor to have a
+	  stable voltage supply and less reflection and to compensatore for the capacitance on the wire
+	  between the main board and any additional sensor board. after having that, we can do some measurement
+	  to check, if the signals are good.
+	  modification:
+	  * if the singals do not look that nice at 100kHz, then we need to lower the resistors to 10kOhm.
+	  * if the signals look bad, we need to lower the resistors to 4,7kOhm and check again. this should
+	    reduce the e-curve to a third of the time.
+	  
+	  * different proposal for testing without measurement device:
+		* use 4.7kOhm resistors from the beginning
+		* check, if it is working with 100kHz
+	    * check, if it is working with 400kHz
+		* check the signal later, when having a scope at hand.
 	
-4. PCB
+9. PCB
 	* the PCB should be designed with KiCAD
 	* It should have a QRCODE or something similar on the PCB to point to the github page to get
 	  all the documentation needed (if someone sees this and doesn't know what it is or what it does)
