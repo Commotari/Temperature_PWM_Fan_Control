@@ -96,6 +96,30 @@
 	* 
 	
 1.a PIC18F16Q41-I/P
+    * Refer to Basic connection requirements in datasheet
+	* nMCLR pin needs a basic pull-up netword according to the datasheet
+	* PWM outputs:
+		- PWM1S1P1_OUT: RA2
+		- PWM2S1P1_OUT: RC0
+		- PWM3S1P1_OUT: RC1
+	* LEDs:
+		maximum rating on I/O pin is 50mA, LEDs should only draw 10mA 
+		- red led
+			Quadrios, reichelt.de QUAD 2111O173, 3mm, 2500 mcd, 25°, 625nm
+			If(typ) 20mA, Uf(typ) 2.0V
+			resistor: R=(5V-2,0V)/0,01A = 3V/0,01A = 300 Ohm
+		- red green
+			Quadrios, reichelt.de QUAD 2111O176, 3mm, 8000 mcd, 25°, 520nm
+			If(typ) 20mA, Uf(typ) 3.0V
+			resistor: R=(5V-3,0V)/0,01A = 2V/0,01A = 200 Ohm
+		==> green led might be too bright at 200Ohm
+		==> both LED will get 330 Ohm resistor.
+	* Serial interface: TODO
+		- first simple interface is a 5V compatible serial2USB cable from FTDI connected to a 6-pin pin header
+		- onboard serial2USB converter chip with a USB connector on board ==> todo in the future
+	* I2C interface: TODO
+		
+		
 	
 	
 2. Fan(s)
