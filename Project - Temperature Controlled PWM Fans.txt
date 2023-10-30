@@ -218,7 +218,17 @@
 	    * check, if it is working with 400kHz
 		* check the signal later, when having a scope at hand.
 	
-9. PCB
+11. Bluetooth vs. USB-interface
+	At reichelt.de there was an ESP32-C3FH4 bluetooth/wifi module for less than 3€. (ESP32-C3-MINI-1)
+	This is a solution that has simiar costs compared to the usb interface (chip + connector).
+	Bluetooth might be an easy way to connect to a mobile device (android phone) to check temperature logs and
+	adjust the configuration (for the lowest and highest temperature levels to control the fan speed).
+	It would even be possible to send temperature logs to a website via a simple http client via a wifi connection.
+	Even without controlling a fan this could also serve as a temperature surveillance device for other applications.
+	
+	  
+
+10. PCB
 	* the PCB should be designed with KiCAD
 	* It should have a QRCODE or something similar on the PCB to point to the github page to get
 	  all the documentation needed (if someone sees this and doesn't know what it is or what it does)
